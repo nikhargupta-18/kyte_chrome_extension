@@ -1,0 +1,543 @@
+/* ============================================================
+   KYTE Popup — Stylesheet
+   Design tokens mirror kyte-dev.vercel.app exactly.
+   ============================================================ */
+
+/* ── Google Font import (loaded from extension, no network needed) */
+/* We use system-ui stack as close match to the app's font display */
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:           #0c0c0c;
+  --bg-raised:    #111;
+  --bg-raised-2:  #1a1a1a;
+  --line:         #1e1e1e;
+  --line-strong:  #2a2a2a;
+  --ink:          #f0f0f0;
+  --ink-dim:      #888;
+  --ink-faint:    #444;
+  --allow:        rgba(79,184,124,0.6);
+  --allow-bright: #4fb87c;
+  --allow-bg:     rgba(79,184,124,0.08);
+  --deny:         rgba(248,113,113,0.7);
+  --deny-bright:  #f87171;
+  --radius:       8px;
+  --mono:         'SF Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 360px;
+  min-height: 500px;
+  max-height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+body::-webkit-scrollbar { width: 3px; }
+body::-webkit-scrollbar-track { background: transparent; }
+body::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; }
+
+/* ── Header ─────────────────────────────────────────────────── */
+#kyte-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+#kyte-wordmark {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: var(--allow-bright);
+}
+
+#kyte-master-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+#kyte-master-label {
+  font-size: 11px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s;
+}
+
+/* ── Toggle switch ──────────────────────────────────────────── */
+button[role="switch"] {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 100px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-raised-2);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+button[role="switch"][aria-checked="true"] {
+  background: var(--allow-bright);
+  border-color: var(--allow-bright);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+  display: block;
+}
+
+button[role="switch"][aria-checked="true"] .toggle-thumb {
+  transform: translateX(16px);
+}
+
+/* ── Session Banner ─────────────────────────────────────────── */
+#kyte-session-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 16px;
+  background: var(--allow-bg);
+  border-bottom: 1px solid rgba(79,184,124,0.15);
+  font-size: 11px;
+}
+
+#kyte-session-banner.hidden { display: none; }
+
+#kyte-session-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--allow-bright);
+}
+
+.chip-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--allow-bright);
+  box-shadow: 0 0 5px var(--allow-bright);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+#kyte-session-timer-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#kyte-session-timer {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--allow-bright);
+  min-width: 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kyte-end-session-btn {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#kyte-end-session-btn:hover {
+  color: var(--deny-bright);
+  border-color: var(--deny-bright);
+}
+
+/* ── Main ────────────────────────────────────────────────────── */
+#kyte-main {
+  padding: 4px 0 0;
+}
+
+/* ── Sections ───────────────────────────────────────────────── */
+.kyte-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.kyte-section:last-child {
+  border-bottom: none;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-family: var(--mono);
+}
+
+.section-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  background: var(--bg-raised-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 100px;
+  padding: 0px 6px;
+  line-height: 1.6;
+}
+
+/* ── Add row ────────────────────────────────────────────────── */
+.add-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.add-row:focus-within {
+  border-color: var(--allow-bright);
+}
+
+.add-row input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink);
+  padding: 9px 12px;
+  min-width: 0;
+  caret-color: var(--allow-bright);
+}
+
+.add-row input::placeholder {
+  color: var(--ink-faint);
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  border-left: 1px solid var(--line-strong);
+  color: var(--allow-bright);
+  font-size: 18px;
+  width: 36px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: background 0.15s;
+  line-height: 1;
+  padding-bottom: 2px;
+}
+
+.icon-btn:hover {
+  background: var(--allow-bg);
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  border-left: 1px solid var(--line-strong);
+  color: var(--ink-faint);
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  padding: 0 10px;
+  height: 100%;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.text-btn:hover {
+  color: var(--ink-dim);
+}
+
+/* ── Item lists ─────────────────────────────────────────────── */
+.item-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  transition: border-color 0.15s;
+}
+
+.item-list li:hover {
+  border-color: var(--line-strong);
+}
+
+.item-domain {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-url {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--allow-bright);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-remove {
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+}
+
+.item-remove:hover {
+  color: var(--deny-bright);
+  background: rgba(248,113,113,0.08);
+}
+
+.item-path-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--deny-bright);
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.3);
+  border-radius: 4px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-align: center;
+  padding: 10px 0 4px;
+  font-family: var(--mono);
+}
+
+.empty-state.hidden { display: none; }
+
+/* Input validation error flash */
+.add-row input.error {
+  color: var(--deny-bright) !important;
+  caret-color: var(--deny-bright) !important;
+}
+.add-row:has(input.error) {
+  border-color: var(--deny-bright) !important;
+}
+
+/* ── Session Form ───────────────────────────────────────────── */
+#session-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+
+.form-sublabel {
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+  display: block;
+}
+
+.session-duration-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.duration-chips {
+  display: flex;
+  gap: 5px;
+}
+
+.duration-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  padding: 4px 9px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.duration-chip:hover {
+  color: var(--ink-dim);
+  border-color: #3a3a3a;
+}
+
+.duration-chip.active {
+  color: var(--allow-bright);
+  border-color: var(--allow-bright);
+  background: var(--allow-bg);
+}
+
+.custom-duration-input {
+  width: 60px;
+  text-align: center;
+  outline: none;
+  cursor: text;
+}
+
+.custom-duration-input::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+.custom-duration-input::-webkit-outer-spin-button,
+.custom-duration-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.session-lock-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lock-label-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 11px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--allow-bright);
+  color: #0c0c0c;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.primary-btn:hover {
+  background: #3da868;
+}
+
+.primary-btn:active {
+  background: #2e9058;
+}
+
+.primary-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+#kyte-footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+
+/* ── Disabled state overlay on session-section during session ─ */
+#session-section.session-active #session-form {
+  opacity: 0.4;
+  pointer-events: none;
+}

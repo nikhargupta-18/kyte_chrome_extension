@@ -1,0 +1,230 @@
+/* ============================================================
+   Kyte — Blocked Page
+   Full-page version of the block overlay, shown when DNR
+   redirects a blocked URL to chrome-extension://…/blocked.html
+   ============================================================ */
+
+:root {
+  --bg:          #0c0c0c;
+  --bg-raised:   #111111;
+  --ink:         #f0f0f0;
+  --ink-dim:     #888888;
+  --ink-faint:   #444444;
+  --allow:       rgba(79,184,124,0.6);
+  --allow-bright:#4fb87c;
+  --allow-bg:    rgba(79,184,124,0.08);
+  --deny-bright: #f87171;
+  --line:        #1e1e1e;
+  --line-strong: #2a2a2a;
+  --mono:        'SF Mono', 'Fira Code', 'Courier New', monospace;
+  --radius:      8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Grid background ──────────────────────────────────────── */
+#overlay-grid {
+  position: fixed;
+  inset: 0;
+  opacity: 0.4;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+/* ── Layout ───────────────────────────────────────────────── */
+#overlay-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* ── Content card ─────────────────────────────────────────── */
+#overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 540px;
+  width: calc(100% - 48px);
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  padding: 36px 40px;
+  backdrop-filter: blur(8px);
+  animation: contentIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes contentIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* ── Logo mark ────────────────────────────────────────────── */
+#logo-mark {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--allow-bright);
+  opacity: 0.8;
+}
+
+/* ── Status chip ──────────────────────────────────────────── */
+#status-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(79,184,124,0.08);
+  border: 1px solid rgba(79,184,124,0.2);
+  border-radius: 100px;
+  padding: 4px 12px 4px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--allow-bright);
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--allow-bright);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Title ────────────────────────────────────────────────── */
+#overlay-title {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* ── Subtitle ─────────────────────────────────────────────── */
+#overlay-sub {
+  font-size: 14px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+#overlay-sub strong { color: var(--ink); }
+
+#kyte-timer {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--allow-bright);
+}
+
+/* ── Allow box ────────────────────────────────────────────── */
+#allow-box {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+#allow-box-header {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 14px;
+}
+
+.mono-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+#allow-input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+#allow-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--line-strong);
+  padding: 11px 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+  outline: none;
+  min-width: 0;
+}
+
+#allow-input::placeholder { color: var(--ink-faint); }
+
+#allow-input.error {
+  background: rgba(248,113,113,0.06);
+  color: var(--deny-bright);
+}
+
+#add-allow-btn {
+  background: var(--allow-bg);
+  border: none;
+  color: var(--allow-bright);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 11px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+  margin-left: 8px;
+  border-radius: 6px;
+  margin: 6px;
+}
+
+#add-allow-btn:hover {
+  background: rgba(79,184,124,0.18);
+  color: #6dd49a;
+}
+
+#allow-hint {
+  padding: 8px 14px;
+  font-size: 11px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+}
+
+/* ── Go back ──────────────────────────────────────────────── */
+#go-back {
+  font-size: 13px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.15s;
+  user-select: none;
+  margin-top: 4px;
+}
+
+#go-back:hover { color: var(--ink-dim); }

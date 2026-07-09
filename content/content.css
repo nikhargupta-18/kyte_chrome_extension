@@ -1,0 +1,272 @@
+/* ============================================================
+   KYTE — Block Overlay Styles
+   Injected into every page. Uses Kyte's design language:
+   dark bg, mono font, green "allow" accents, red "deny" chips.
+   ============================================================ */
+
+/* ── Reset overlay container ─────────────────────────────── */
+#kyte-block-overlay {
+  all: initial;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important; /* Max z-index */
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif !important;
+  background: #0c0c0c !important;
+  color: #f0f0f0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+/* ── Grid background ──────────────────────────────────────── */
+#kyte-overlay-inner {
+  all: initial;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 1 !important;
+}
+
+#kyte-overlay-grid {
+  all: initial;
+  position: absolute !important;
+  inset: 0 !important;
+  opacity: 0.4 !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) !important;
+  background-size: 64px 64px !important;
+  pointer-events: none !important;
+}
+
+/* ── Content card ─────────────────────────────────────────── */
+#kyte-overlay-content {
+  all: initial;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 20px !important;
+  max-width: 540px !important;
+  width: calc(100% - 48px) !important;
+  background: rgba(255,255,255,0.025) !important;
+  border: 1px solid #2a2a2a !important;
+  border-radius: 16px !important;
+  padding: 36px 40px !important;
+  backdrop-filter: blur(8px) !important;
+  animation: kyte-contentIn 0.3s cubic-bezier(0.16,1,0.3,1) both !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes kyte-contentIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* ── Logo mark ────────────────────────────────────────────── */
+#kyte-logo-mark {
+  all: initial;
+  display: block !important;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2em !important;
+  color: #4fb87c !important;
+  opacity: 0.8 !important;
+}
+
+/* ── Status chip ──────────────────────────────────────────── */
+#kyte-status-chip {
+  all: initial;
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  background: rgba(79,184,124,0.08) !important;
+  border: 1px solid rgba(79,184,124,0.2) !important;
+  border-radius: 100px !important;
+  padding: 4px 12px 4px 9px !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #4fb87c !important;
+}
+
+#kyte-status-chip span:not(.kyte-chip-dot) {
+  all: initial;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+}
+
+.kyte-chip-dot {
+  all: initial;
+  display: block !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #4fb87c !important;
+  animation: kyte-pulse 2s ease-in-out infinite !important;
+  flex-shrink: 0 !important;
+}
+
+@keyframes kyte-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Title ────────────────────────────────────────────────── */
+#kyte-overlay-title {
+  all: initial;
+  display: block !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: clamp(24px, 4vw, 32px) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.02em !important;
+  color: #f0f0f0 !important;
+}
+
+/* ── Subtitle ─────────────────────────────────────────────── */
+#kyte-overlay-sub {
+  all: initial;
+  display: block !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: 14px !important;
+  color: #888888 !important;
+  line-height: 1.6 !important;
+}
+
+#kyte-overlay-sub strong {
+  all: initial;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  color: #f0f0f0 !important;
+}
+
+#kyte-timer {
+  all: initial;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 13px !important;
+  color: #4fb87c !important;
+}
+
+/* ── Allow URL Box ────────────────────────────────────────── */
+#kyte-allow-box {
+  all: initial;
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border: 1px solid #2a2a2a !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+#kyte-allow-box-header {
+  all: initial;
+  display: block !important;
+  background: rgba(255,255,255,0.03) !important;
+  border-bottom: 1px solid #1e1e1e !important;
+  padding: 10px 14px !important;
+  box-sizing: border-box !important;
+}
+
+.kyte-mono-label {
+  all: initial;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #444444 !important;
+}
+
+#kyte-allow-input-row {
+  all: initial;
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+}
+
+#kyte-allow-input {
+  all: initial;
+  flex: 1 !important;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 12px !important;
+  color: #f0f0f0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-right: 1px solid #2a2a2a !important;
+  padding: 11px 14px !important;
+  outline: none !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#kyte-allow-input::placeholder {
+  color: #444444 !important;
+}
+
+#kyte-allow-input.kyte-input-error {
+  color: #f87171 !important;
+  background: rgba(248, 113, 113, 0.06) !important;
+}
+
+#kyte-add-allow-btn {
+  all: initial;
+  display: block !important;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #4fb87c !important;
+  background: rgba(79,184,124,0.08) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  margin: 6px !important;
+  padding: 11px 16px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+
+#kyte-add-allow-btn:hover {
+  background: rgba(79,184,124,0.18) !important;
+  color: #6dd49a !important;
+}
+
+#kyte-allow-hint {
+  all: initial;
+  display: block !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: 11px !important;
+  color: #444444 !important;
+  padding: 8px 14px !important;
+  border-top: 1px solid #1e1e1e !important;
+  box-sizing: border-box !important;
+}
+
+/* ── Go back ──────────────────────────────────────────────── */
+#kyte-go-back {
+  all: initial;
+  display: inline-block !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: 13px !important;
+  color: #444444 !important;
+  cursor: pointer !important;
+  transition: color 0.15s !important;
+  user-select: none !important;
+  margin-top: 4px !important;
+}
+
+#kyte-go-back:hover {
+  color: #888888 !important;
+}

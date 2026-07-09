@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blocked by Kyte</title>
+  <link rel="stylesheet" href="blocked.css" />
+</head>
+<body>
+
+  <div id="overlay-grid"></div>
+
+  <div id="overlay-inner">
+    <div id="overlay-content">
+
+      <div id="logo-mark">KYTE</div>
+
+      <div id="status-chip">
+        <span class="chip-dot"></span>
+        <span id="status-text">Blocking Active</span>
+      </div>
+
+      <h1 id="overlay-title">Stop negotiating<br>with yourself.</h1>
+
+      <p id="overlay-sub">
+        <strong id="blocked-hostname">this site</strong> is blocked.
+        <span id="timer-wrap" style="display:none">
+          Session ends in <span id="kyte-timer">—</span>.
+        </span>
+      </p>
+
+      <div id="allow-box">
+        <div id="allow-box-header">
+          <span class="mono-label">Allow this specific URL</span>
+        </div>
+        <div id="allow-input-row">
+          <input
+            id="allow-input"
+            type="text"
+            placeholder="Paste any URL on this domain…"
+            spellcheck="false"
+            autocomplete="off"
+          />
+          <button id="add-allow-btn">ALLOW THIS PAGE</button>
+        </div>
+        <p id="allow-hint">Everything else stays blocked.</p>
+      </div>
+
+      <div id="go-back">← Go back</div>
+
+    </div>
+  </div>
+
+  <script src="blocked.js"></script>
+</body>
+</html>

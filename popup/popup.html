@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyte</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- ── Header ───────────────────────────────────────────── -->
+  <header id="kyte-header">
+    <span id="kyte-wordmark">KYTE</span>
+    <div id="kyte-master-toggle-wrap">
+      <span id="kyte-master-label">Blocking</span>
+      <button id="kyte-master-toggle" role="switch" aria-checked="false">
+        <span class="toggle-thumb"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Session Banner (shown when session active) ────────── -->
+  <div id="kyte-session-banner" class="hidden">
+    <div id="kyte-session-banner-left">
+      <span class="chip-dot"></span>
+      <span id="kyte-session-label">Session active</span>
+    </div>
+    <div id="kyte-session-timer-wrap">
+      <span id="kyte-session-timer">—</span>
+      <button id="kyte-end-session-btn">End</button>
+    </div>
+  </div>
+
+  <!-- ── Main Content ─────────────────────────────────────── -->
+  <main id="kyte-main">
+
+    <!-- ── Blocked Sites Section ─────────────────────────── -->
+    <section class="kyte-section">
+      <div class="section-header">
+        <span class="section-title">Blocked</span>
+        <span class="section-count" id="blocked-count">0</span>
+      </div>
+
+      <div class="add-row">
+        <input
+          id="domain-input"
+          type="text"
+          placeholder="instagram.com/reels"
+          spellcheck="false"
+          autocomplete="off"
+        />
+        <button id="add-domain-btn" class="icon-btn" title="Block domain">+</button>
+      </div>
+
+      <ul id="blocked-list" class="item-list"></ul>
+
+      <div id="blocked-empty" class="empty-state hidden">
+        No blocked domains yet.
+      </div>
+    </section>
+
+    <!-- ── Allowed URLs Section ──────────────────────────── -->
+    <section class="kyte-section">
+      <div class="section-header">
+        <span class="section-title">Allowed URLs</span>
+        <span class="section-count" id="allowed-count">0</span>
+      </div>
+
+      <div class="add-row">
+        <input
+          id="url-input"
+          type="text"
+          placeholder="Paste a specific URL…"
+          spellcheck="false"
+          autocomplete="off"
+        />
+        <button id="add-url-current-btn" class="text-btn" title="Add current tab URL">This tab</button>
+        <button id="add-url-btn" class="icon-btn" title="Add URL">+</button>
+      </div>
+
+      <ul id="allowed-list" class="item-list"></ul>
+
+      <div id="allowed-empty" class="empty-state hidden">
+        No exceptions. Everything on blocked domains is blocked.
+      </div>
+    </section>
+
+    <!-- ── Session Section ───────────────────────────────── -->
+    <section class="kyte-section" id="session-section">
+      <div class="section-header">
+        <span class="section-title">Session</span>
+      </div>
+
+      <div id="session-form">
+        <div class="session-duration-row">
+          <span class="form-label">Duration</span>
+          <div class="duration-chips" role="group">
+            <button class="duration-chip" data-minutes="25">25m</button>
+            <button class="duration-chip" data-minutes="45">45m</button>
+            <button class="duration-chip active" data-minutes="60">1h</button>
+            <button class="duration-chip" data-minutes="120">2h</button>
+            <input type="number" id="custom-duration" class="duration-chip custom-duration-input" placeholder="Custom" min="1" max="999">
+          </div>
+        </div>
+
+        <div class="session-lock-row">
+          <div class="lock-label-wrap">
+            <span class="form-label">Locked mode</span>
+            <span class="form-sublabel">Can't be turned off early</span>
+          </div>
+          <button id="lock-toggle" role="switch" aria-checked="false">
+            <span class="toggle-thumb"></span>
+          </button>
+        </div>
+
+        <button id="start-session-btn" class="primary-btn">
+          Start Session
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer id="kyte-footer">
+    <span>Built locally. Stays locally.</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

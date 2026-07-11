@@ -12,6 +12,7 @@
     "storage",
     "tabs",
     "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
     "alarms"
   ],
   "host_permissions": [

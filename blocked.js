@@ -87,12 +87,15 @@
     if (namespace !== 'local') return;
     if (changes.kyteEnabled || changes.allowedUrls || changes.blockedDomains) {
       // Re-check if we should still be blocking
-      chrome.runtime.sendMessage({ type: 'GET_STATE' }).then(resp => {
-        const newState = resp?.state ?? {};
-        if (!newState.kyteEnabled || isNowAllowed(originalUrl, newState)) {
-          window.location.replace(originalUrl || 'https://www.google.com');
-        }
-      }).catch(() => {});
+      (async () => {
+        try {
+          const resp = await chrome.runtime.sendMessage({ type: 'GET_STATE' });
+          const newState = resp?.state ?? {};
+          if (!newState.kyteEnabled || isNowAllowed(originalUrl, newState)) {
+            window.location.replace(originalUrl || 'https://www.google.com');
+          }
+        } catch (_) {}
+      })();
     }
   });
 })();

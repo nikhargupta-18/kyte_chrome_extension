@@ -1,0 +1,218 @@
+<!DOCTYPE html><html class="h-full bg-[#F4F4F4]" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>KYTE — Focus &amp; Boundary Controller</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#FFFFFF',
+            ink: '#0A0A0A',
+            hairline: '#EAEAEA',
+            subtle: '#71717A',
+            muted: '#A1A1AA',
+            wash: '#FAFAFA'
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', 'monospace'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Helvetica Neue', 'Arial', 'sans-serif'],
+            serif: ['Newsreader', 'Georgia', 'serif']
+          },
+          boxShadow: {
+            'studio': '0 24px 60px -15px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06)'
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-utilities">
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    ::selection {
+      background: #0A0A0A;
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body class="min-h-full flex items-center justify-center p-3 sm:p-6 text-ink antialiased font-sans select-none bg-[#F5F5F5]">
+<!-- BEGIN: ExtensionPopupContainer -->
+<div class="w-full max-w-[390px] bg-paper rounded-2xl shadow-studio border border-[#E5E5E5] overflow-hidden flex flex-col" data-purpose="extension-popup-frame" id="kyte-popup-root">
+<!-- BEGIN: HeaderBar -->
+<header class="px-5 pt-5 pb-4 bg-paper border-b border-hairline flex items-start justify-between" data-purpose="popup-header">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold tracking-[0.28em] text-[15px] text-ink uppercase">KYTE</span>
+<span class="text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded-sm border border-black/15 font-mono text-zinc-500">Edition 03</span>
+</div>
+<p class="text-[11px] text-subtle tracking-tight mt-0.5 font-normal">Focus &amp; Boundary Controller</p>
+</div>
+<!-- Minimal Monochrome Micro-switch -->
+<div class="flex items-center gap-2 pt-0.5">
+<span class="text-[10px] tracking-widest uppercase font-mono text-ink font-semibold" id="global-status-text">ARMED</span>
+<label class="relative inline-flex items-center cursor-pointer" for="global-toggle">
+<input checked="" class="sr-only peer" id="global-toggle" type="checkbox">
+<div class="w-9 h-5 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:bg-ink after:content-[''] after:absolute after:top-[2.5px] after:left-[2.5px] after:bg-white after:rounded-full after:h-[15px] after:w-[15px] after:transition-transform peer-checked:after:translate-x-4"></div>
+</label>
+</div>
+</header>
+<!-- END: HeaderBar -->
+<!-- BEGIN: MainContent -->
+<main class="p-5 space-y-5 max-h-[580px] overflow-y-auto no-scrollbar" data-purpose="popup-body">
+<!-- HERO METRIC: State & Duration Selector -->
+<section class="space-y-3.5 bg-wash rounded-xl p-4 border border-hairline" data-purpose="hero-state-session">
+<div class="flex items-baseline justify-between">
+<div class="space-y-0.5">
+<span class="text-[9px] font-mono uppercase tracking-[0.2em] text-muted">Current State</span>
+<h1 class="text-xl font-bold tracking-tight text-ink uppercase">Ready to Focus</h1>
+</div>
+<div class="text-right">
+<span class="text-[9px] font-mono uppercase tracking-[0.2em] text-muted">Target</span>
+<p class="text-xs font-mono font-bold text-ink">60 MIN</p>
+</div>
+</div>
+<!-- Large Minimalist Preset Row -->
+<div class="grid grid-cols-4 gap-1.5 pt-1" data-purpose="duration-presets">
+<button class="py-2 rounded-lg border border-hairline bg-white hover:border-black/30 transition-all flex flex-col items-center justify-center group" type="button">
+<span class="text-sm font-bold text-zinc-600 group-hover:text-ink tracking-tight font-mono">25</span>
+<span class="text-[9px] uppercase tracking-wider text-muted font-mono">min</span>
+</button>
+<button class="py-2 rounded-lg border border-hairline bg-white hover:border-black/30 transition-all flex flex-col items-center justify-center group" type="button">
+<span class="text-sm font-bold text-zinc-600 group-hover:text-ink tracking-tight font-mono">45</span>
+<span class="text-[9px] uppercase tracking-wider text-muted font-mono">min</span>
+</button>
+<!-- Active Selection: Archival Inverted Highlight -->
+<button class="py-2 rounded-lg bg-ink text-white shadow-xs flex flex-col items-center justify-center" type="button">
+<span class="text-sm font-bold tracking-tight font-mono">60</span>
+<span class="text-[9px] uppercase tracking-wider text-zinc-300 font-mono">min</span>
+</button>
+<button class="py-2 rounded-lg border border-hairline bg-white hover:border-black/30 transition-all flex flex-col items-center justify-center group" type="button">
+<span class="text-sm font-bold text-zinc-600 group-hover:text-ink tracking-tight font-mono">Custom</span>
+<span class="text-[9px] uppercase tracking-wider text-muted font-mono">edit</span>
+</button>
+</div>
+</section>
+<!-- SECTION: Restricted Sites -->
+<section class="rounded-xl border border-hairline bg-white p-3.5 space-y-2.5" data-purpose="restricted-sites-card">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h2 class="text-[10px] font-bold uppercase tracking-[0.18em] font-mono text-ink">Restricted Sites</h2>
+<span class="text-[10px] font-mono px-1.5 py-0.2 rounded-full border border-hairline text-zinc-700 bg-wash">2</span>
+</div>
+<span class="text-[10px] text-muted font-mono tracking-tight">Zero-bypass list</span>
+</div>
+<!-- Minimal Input Bar -->
+<div class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-hairline bg-wash focus-within:border-ink focus-within:bg-white transition-all">
+<span class="text-zinc-400 font-mono text-xs">+</span>
+<input class="w-full bg-transparent text-xs text-ink placeholder:text-zinc-400 font-mono focus:outline-none border-none p-0" placeholder="Add domain or exact path..." type="text">
+<button class="px-2 py-0.5 text-[10px] uppercase font-mono font-semibold tracking-wider text-zinc-500 hover:text-ink transition-colors" type="button">
+          Add
+        </button>
+</div>
+<!-- Site Items: Clean Hairline Rows -->
+<div class="space-y-1.5 pt-1">
+<div class="flex items-center justify-between px-2.5 py-2 rounded-md bg-wash/60 border border-hairline/80 font-mono text-xs text-zinc-800">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+<span class="">instagram.com/reels</span>
+</div>
+<button class="text-zinc-400 hover:text-ink transition-colors text-sm px-1 leading-none" title="Remove">×</button>
+</div>
+<div class="flex items-center justify-between px-2.5 py-2 rounded-md bg-wash/60 border border-hairline/80 font-mono text-xs text-zinc-800">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+<span class="">twitter.com/explore</span>
+</div>
+<button class="text-zinc-400 hover:text-ink transition-colors text-sm px-1 leading-none" title="Remove">×</button>
+</div>
+</div>
+</section>
+<!-- SECTION: Permitted Exceptions -->
+<section class="rounded-xl border border-hairline bg-white p-3.5 space-y-2.5" data-purpose="permitted-exceptions-card">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h2 class="text-[10px] font-bold uppercase tracking-[0.18em] font-mono text-ink">Permitted Exceptions</h2>
+<span class="text-[10px] font-mono px-1.5 py-0.2 rounded-full border border-hairline text-zinc-700 bg-wash">1</span>
+</div>
+
+</div>
+<!-- Exception Entry Item -->
+<div class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-hairline bg-wash focus-within:border-ink focus-within:bg-white transition-all"><span class="text-zinc-400 font-mono text-xs">+</span><input class="w-full bg-transparent text-xs text-ink placeholder:text-zinc-400 font-mono focus:outline-none border-none p-0" placeholder="Add exception URL or path..." type="text"><button class="px-2 py-0.5 text-[10px] uppercase font-mono font-semibold tracking-wider text-zinc-500 hover:text-ink transition-colors" type="button">Add</button></div><div class="flex items-center justify-between px-2.5 py-2 rounded-md bg-white border border-dashed border-zinc-300 font-mono text-xs text-zinc-800">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full border border-ink"></span>
+<span class="">instagram.com/direct</span>
+</div>
+<button class="text-zinc-400 hover:text-ink transition-colors text-sm px-1 leading-none" title="Remove">×</button>
+</div>
+</section>
+<!-- SECTION: Strict Lock Guard -->
+<div class="flex items-center justify-between p-3.5 rounded-xl border border-hairline bg-wash" data-purpose="lock-guard-card">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded-md border border-hairline bg-white flex items-center justify-center text-ink shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+</div>
+<div>
+<p class="text-xs font-semibold text-ink">Locked In Mode</p>
+<p class="text-[10px] text-subtle">Irreversible until the active timer expires</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer" for="locked-toggle">
+<input class="sr-only peer" id="locked-toggle" type="checkbox">
+<div class="w-8 h-4 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:bg-ink after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-transform peer-checked:after:translate-x-4"></div>
+</label>
+</div>
+<!-- PRIMARY ACTION: Pure Jet Black Editorial Pill Button -->
+<button class="w-full py-3.5 px-5 rounded-full bg-ink hover:bg-black text-white text-xs font-semibold tracking-wider uppercase flex items-center justify-center gap-2.5 transition-all duration-150 active:scale-[0.99] group shadow-xs" data-purpose="start-session-button" id="btn-start-session" type="button">
+<span class="">Begin Focus Session</span>
+<span class="text-sm font-normal transition-transform group-hover:translate-x-0.5">→</span>
+</button>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: Footer -->
+<footer class="px-5 py-3 bg-white border-t border-hairline flex items-center justify-between text-[10px] font-mono text-subtle" data-purpose="popup-footer">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
+<span class="">Stored exclusively on device</span>
+</div>
+<a class="inline-flex items-center gap-1 hover:text-ink transition-colors uppercase tracking-wider" href="#" target="_blank"><span class="">Visit Site</span><span class="text-[11px] leading-none">↗</span></a>
+</footer>
+<!-- END: Footer -->
+</div>
+<!-- END: ExtensionPopupContainer -->
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="toggle-handling">
+  const toggle = document.getElementById('global-toggle');
+  const statusText = document.getElementById('global-status-text');
+
+  if (toggle && statusText) {
+    const updateStatus = () => {
+      if (toggle.checked) {
+        statusText.textContent = 'ARMED';
+        statusText.classList.remove('text-zinc-400');
+        statusText.classList.add('text-ink');
+      } else {
+        statusText.textContent = 'STANDBY';
+        statusText.classList.remove('text-ink');
+        statusText.classList.add('text-zinc-400');
+      }
+    };
+
+    toggle.addEventListener('change', updateStatus);
+    updateStatus();
+  }
+</script>
+<!-- END: InteractiveScripts -->
+
+
+</body></html>

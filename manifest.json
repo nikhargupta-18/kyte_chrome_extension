@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Kyte",
-  "version": "2.0.0",
+  "name": "Kyte - Best Website and URL Level Blocker",
+  "version": "2.3.0",
   "description": "Block sites by domain or specific URL path. Unlock one exception. Run timed focus sessions with optional lock mode.",
   "icons": {
     "16": "icons/icon-16.png",

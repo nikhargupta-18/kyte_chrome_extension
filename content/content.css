@@ -12,9 +12,9 @@
   width: 100vw !important;
   height: 100vh !important;
   z-index: 2147483647 !important; /* Max z-index */
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif !important;
   background: #0c0c0c !important;
-  color: #f0f0f0 !important;
+  color: #f2f2f2 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -73,12 +73,12 @@
 #kyte-logo-mark {
   all: initial;
   display: block !important;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.2em !important;
-  color: #4fb87c !important;
-  opacity: 0.8 !important;
+  color: #5ecb8a !important;
+  opacity: 0.9 !important;
 }
 
 /* ── Status chip ──────────────────────────────────────────── */
@@ -87,14 +87,14 @@
   display: flex !important;
   align-items: center !important;
   gap: 7px !important;
-  background: rgba(79,184,124,0.08) !important;
-  border: 1px solid rgba(79,184,124,0.2) !important;
+  background: rgba(94,203,138,0.09) !important;
+  border: 1px solid rgba(94,203,138,0.22) !important;
   border-radius: 100px !important;
   padding: 4px 12px 4px 9px !important;
   font-family: system-ui, -apple-system, sans-serif !important;
   font-size: 11px !important;
   font-weight: 500 !important;
-  color: #4fb87c !important;
+  color: #5ecb8a !important;
 }
 
 #kyte-status-chip span:not(.kyte-chip-dot) {
@@ -111,7 +111,7 @@
   width: 6px !important;
   height: 6px !important;
   border-radius: 50% !important;
-  background: #4fb87c !important;
+  background: #5ecb8a !important;
   animation: kyte-pulse 2s ease-in-out infinite !important;
   flex-shrink: 0 !important;
 }
@@ -125,21 +125,21 @@
 #kyte-overlay-title {
   all: initial;
   display: block !important;
-  font-family: system-ui, -apple-system, sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   font-size: clamp(24px, 4vw, 32px) !important;
   font-weight: 700 !important;
   line-height: 1.25 !important;
   letter-spacing: -0.02em !important;
-  color: #f0f0f0 !important;
+  color: #f2f2f2 !important;
 }
 
 /* ── Subtitle ─────────────────────────────────────────────── */
 #kyte-overlay-sub {
   all: initial;
   display: block !important;
-  font-family: system-ui, -apple-system, sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   font-size: 14px !important;
-  color: #888888 !important;
+  color: #d0d0d0 !important;   /* raised from #b8b8b8 */
   line-height: 1.6 !important;
 }
 
@@ -147,14 +147,14 @@
   all: initial;
   font-family: inherit !important;
   font-weight: 600 !important;
-  color: #f0f0f0 !important;
+  color: #f2f2f2 !important;
 }
 
 #kyte-timer {
   all: initial;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
   font-size: 13px !important;
-  color: #4fb87c !important;
+  color: #5ecb8a !important;
 }
 
 /* ── Allow URL Box ────────────────────────────────────────── */
@@ -180,12 +180,12 @@
 
 .kyte-mono-label {
   all: initial;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
   font-size: 10px !important;
   font-weight: 600 !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
-  color: #444444 !important;
+  color: #999999 !important;   /* raised from #6e6e6e */
 }
 
 #kyte-allow-input-row {
@@ -198,12 +198,12 @@
 #kyte-allow-input {
   all: initial;
   flex: 1 !important;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
   font-size: 12px !important;
-  color: #f0f0f0 !important;
+  color: #f2f2f2 !important;
   background: transparent !important;
   border: none !important;
-  border-right: 1px solid #2a2a2a !important;
+  border-right: 1px solid #2e2e2e !important;
   padding: 11px 14px !important;
   outline: none !important;
   min-width: 0 !important;
@@ -211,7 +211,7 @@
 }
 
 #kyte-allow-input::placeholder {
-  color: #444444 !important;
+  color: #666666 !important;   /* soft grey - placeholder only */
 }
 
 #kyte-allow-input.kyte-input-error {
@@ -222,13 +222,13 @@
 #kyte-add-allow-btn {
   all: initial;
   display: block !important;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace !important;
   font-size: 10px !important;
   font-weight: 700 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
-  color: #4fb87c !important;
-  background: rgba(79,184,124,0.08) !important;
+  color: #5ecb8a !important;
+  background: rgba(94,203,138,0.09) !important;
   border: none !important;
   border-radius: 6px !important;
   margin: 6px !important;
@@ -239,18 +239,18 @@
 }
 
 #kyte-add-allow-btn:hover {
-  background: rgba(79,184,124,0.18) !important;
-  color: #6dd49a !important;
+  background: rgba(94,203,138,0.18) !important;
+  color: #7ddba8 !important;
 }
 
 #kyte-allow-hint {
   all: initial;
   display: block !important;
-  font-family: system-ui, -apple-system, sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   font-size: 11px !important;
-  color: #444444 !important;
+  color: #999999 !important;   /* raised from #6e6e6e */
   padding: 8px 14px !important;
-  border-top: 1px solid #1e1e1e !important;
+  border-top: 1px solid #222 !important;
   box-sizing: border-box !important;
 }
 
@@ -258,9 +258,9 @@
 #kyte-go-back {
   all: initial;
   display: inline-block !important;
-  font-family: system-ui, -apple-system, sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   font-size: 13px !important;
-  color: #444444 !important;
+  color: #999999 !important;   /* raised from #6e6e6e */
   cursor: pointer !important;
   transition: color 0.15s !important;
   user-select: none !important;
@@ -268,5 +268,5 @@
 }
 
 #kyte-go-back:hover {
-  color: #888888 !important;
+  color: #d0d0d0 !important;
 }

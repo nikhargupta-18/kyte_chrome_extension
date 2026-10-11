@@ -3,20 +3,23 @@
    Full-page version of the block overlay, shown when DNR
    redirects a blocked URL to chrome-extension://…/blocked.html
    ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --bg:          #0c0c0c;
-  --bg-raised:   #111111;
-  --ink:         #f0f0f0;
-  --ink-dim:     #888888;
-  --ink-faint:   #444444;
-  --allow:       rgba(79,184,124,0.6);
-  --allow-bright:#4fb87c;
-  --allow-bg:    rgba(79,184,124,0.08);
+  --bg-raised:   #131313;
+  --ink:         #f2f2f2;
+  --ink-dim:     #d0d0d0;   /* bright grey — visible labels */
+  --ink-faint:   #999999;   /* mid grey — secondary text */
+  --ink-muted:   #666666;   /* soft grey — placeholders */
+  --allow:       rgba(94,203,138,0.6);
+  --allow-bright:#5ecb8a;
+  --allow-bg:    rgba(94,203,138,0.09);
   --deny-bright: #f87171;
-  --line:        #1e1e1e;
-  --line-strong: #2a2a2a;
-  --mono:        'SF Mono', 'Fira Code', 'Courier New', monospace;
+  --line:        #222;
+  --line-strong: #2e2e2e;
+  --sans:        'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:        'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
   --radius:      8px;
 }
 
@@ -28,8 +31,9 @@ html, body {
   overflow: hidden;
   background: var(--bg);
   color: var(--ink);
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* ── Grid background ──────────────────────────────────────── */
@@ -126,7 +130,7 @@ html, body {
 /* ── Subtitle ─────────────────────────────────────────────── */
 #overlay-sub {
   font-size: 14px;
-  color: var(--ink-dim);
+  color: var(--ink-dim);    /* raised from #888 */
   line-height: 1.6;
 }
 
@@ -158,7 +162,7 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-faint);  /* raised from #444 */
 }
 
 #allow-input-row {
@@ -213,14 +217,14 @@ html, body {
 #allow-hint {
   padding: 8px 14px;
   font-size: 11px;
-  color: var(--ink-faint);
+  color: var(--ink-faint);  /* raised from #444 */
   border-top: 1px solid var(--line);
 }
 
 /* ── Go back ──────────────────────────────────────────────── */
 #go-back {
   font-size: 13px;
-  color: var(--ink-faint);
+  color: var(--ink-faint);  /* raised from #444 */
   cursor: pointer;
   transition: color 0.15s;
   user-select: none;

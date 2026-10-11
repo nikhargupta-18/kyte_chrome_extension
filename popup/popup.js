@@ -56,11 +56,18 @@ function bindEvents() {
   $('add-url-btn').addEventListener('click', () => addAllowedUrl());
   $('url-input').addEventListener('keydown', e => { if (e.key === 'Enter') addAllowedUrl(); });
 
-  // "This tab" button
-  $('add-url-current-btn').addEventListener('click', async () => {
+  // "This tab" button — block current tab's domain
+  $('add-domain-current-btn').addEventListener('click', async () => {
     const response = await chrome.runtime.sendMessage({ type: 'GET_CURRENT_TAB_URL' });
     if (response?.ok && response.url) {
-      $('url-input').value = response.url;
+      try {
+        const hostname = new URL(response.url).hostname;
+        $('domain-input').value = hostname;
+        $('domain-input').focus();
+      } catch (_) {
+        $('domain-input').value = response.url;
+        $('domain-input').focus();
+      }
     }
   });
 
@@ -82,7 +89,7 @@ function bindEvents() {
   if (customInput) {
     const handleCustomInput = () => {
       document.querySelectorAll('.duration-chip').forEach(c => c.classList.remove('active'));
-      customInput.classList.add('active');
+      customInput.closest('.duration-chip')?.classList.add('active');
       const val = parseInt(customInput.value, 10);
       selectedDurationMinutes = !isNaN(val) && val > 0 ? val : 0;
       renderSessionSection();
@@ -99,6 +106,12 @@ function bindEvents() {
 
   // Start session
   $('start-session-btn').addEventListener('click', startSession);
+
+  // Visit site
+  $('kyte-visit-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://getkyte.online' });
+  });
 
   // End session
   $('kyte-end-session-btn').addEventListener('click', async () => {
@@ -218,8 +231,8 @@ function renderHeader() {
   const toggle = $('kyte-master-toggle');
   const label = $('kyte-master-label');
   toggle.setAttribute('aria-checked', String(state.kyteEnabled));
-  label.textContent = state.kyteEnabled ? 'Blocking' : 'Off';
-  label.style.color = state.kyteEnabled ? 'var(--allow-bright)' : '';
+  label.textContent = state.kyteEnabled ? 'Restricted' : 'Standby';
+  label.style.color = state.kyteEnabled ? 'var(--ink)' : '';
 }
 
 function renderSessionBanner() {
@@ -314,13 +327,21 @@ function renderAllowedList() {
 function renderSessionSection() {
   const section = $('session-section');
   const btn = $('start-session-btn');
+  const stateTitle = $('kyte-current-state');
+  const target = $('kyte-target-minutes');
+  if (stateTitle) {
+    stateTitle.textContent = state.sessionActive ? 'Focus Active' : 'Ready to Focus';
+  }
+  if (target) {
+    target.textContent = formatDurationTarget(selectedDurationMinutes);
+  }
   if (state.sessionActive) {
     section.classList.add('session-active');
-    btn.textContent = 'Session Running…';
+    btn.textContent = 'Session Running...';
     btn.disabled = true;
   } else {
     section.classList.remove('session-active');
-    btn.textContent = 'Start Session';
+    btn.textContent = 'Begin Focus Session';
     btn.disabled = selectedDurationMinutes <= 0;
   }
 }
@@ -376,4 +397,16 @@ function formatUrl(url) {
   } catch (_) {
     return url;
   }
+}
+
+function formatDurationTarget(minutes) {
+  if (!minutes || minutes <= 0) return 'SET MIN';
+  if (minutes < 60) return `${minutes} MIN`;
+  if (minutes % 60 === 0) {
+    const hours = minutes / 60;
+    return `${hours} ${hours === 1 ? 'HR' : 'HRS'}`;
+  }
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours}H ${mins}M`;
 }

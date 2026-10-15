@@ -15,6 +15,7 @@ async function getState() {
     sessionEndTime: 0,        // epoch ms; 0 = no timer
     blockedDomains: [],       // ['youtube.com', 'reddit.com']
     allowedUrls: [],          // ['https://youtube.com/watch?v=abc']
+    isPremium: false,         // true after one-time payment
   };
   const data = await chrome.storage.local.get(Object.keys(defaults));
   return { ...defaults, ...data };

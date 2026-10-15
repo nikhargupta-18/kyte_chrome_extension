@@ -1,0 +1,20 @@
+# Kyte backend dependencies.
+# Verified against Python 3.12.15.
+#
+# Install with:
+#   pip install -r requirements.txt
+#
+# Runtime
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.1
+pydantic-settings==2.15.0
+
+# Test suite (Task 2 onward)
+pytest==9.1.1
+# starlette.testclient does `import httpx2 as httpx`; installing httpx2 silences
+# StarletteDeprecationWarning and keeps the test client on a supported client.
+httpx2==2.13.1
+# Retained for the outbound-network tripwire in tests/conftest.py, which patches
+# the transport layer of whichever client libraries are installed.
+httpx==0.28.1

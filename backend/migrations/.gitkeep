@@ -1,0 +1,5 @@
+# SQL migrations
+
+Task 4 adds `001_create_licensing_tables.sql` (entitlements, purchases,
+webhook_events, RLS). Apply them to a Supabase development project only until
+Task 13.

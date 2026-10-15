@@ -8,15 +8,12 @@
 </head>
 <body>
   <div id="kyte-popup-root">
+    <!-- Header -->
     <header id="kyte-header">
-      <div>
-        <div class="brand-row">
-          <span id="kyte-wordmark">KYTE</span>
-          <span class="edition-badge">Edition 03</span>
-        </div>
-        <p class="header-subtitle">Focus &amp; Boundary Controller</p>
+      <div class="brand-row">
+        <span id="kyte-wordmark">KYTE</span>
       </div>
-
+      <p class="header-subtitle">Best Website and URL Level Blocker</p>
       <div id="kyte-master-toggle-wrap">
         <span id="kyte-master-label">Standby</span>
         <button id="kyte-master-toggle" role="switch" aria-checked="false" title="Toggle blocking">
@@ -25,6 +22,7 @@
       </div>
     </header>
 
+    <!-- Session banner -->
     <div id="kyte-session-banner" class="hidden">
       <div id="kyte-session-banner-left">
         <span class="chip-dot"></span>
@@ -36,11 +34,77 @@
       </div>
     </div>
 
+    <!-- Main content -->
     <main id="kyte-main">
+      <!-- Restricted Sites -->
+      <section class="kyte-section">
+        <div class="section-header">
+          <div class="section-heading">
+            <span class="section-title">Restricted Sites</span>
+            <span class="section-count" id="blocked-count">0</span>
+          </div>
+          <span class="section-note">Zero-bypass list</span>
+        </div>
+
+        <div class="add-row">
+          <svg class="add-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            id="domain-input"
+            type="text"
+            placeholder="Add domain or exact path..."
+            spellcheck="false"
+            autocomplete="off"
+          />
+          <button id="add-domain-current-btn" class="text-btn tab-btn" title="Block current tab's domain">This tab</button>
+          <button id="add-domain-btn" class="text-btn" title="Block domain">Add</button>
+        </div>
+
+        <ul id="blocked-list" class="item-list"></ul>
+
+        <div id="blocked-empty" class="empty-state hidden">
+          No restricted sites yet.
+        </div>
+      </section>
+
+      <!-- Permitted Exceptions -->
+      <section class="kyte-section">
+        <div class="section-header">
+          <div class="section-heading">
+            <span class="section-title">Permitted Exceptions</span>
+            <span class="section-count" id="allowed-count">0</span>
+          </div>
+        </div>
+
+        <div class="add-row">
+          <svg class="add-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            id="url-input"
+            type="text"
+            placeholder="Add exception URL..."
+            spellcheck="false"
+            autocomplete="off"
+          />
+          <button id="add-url-btn" class="text-btn" title="Add URL">Add</button>
+        </div>
+
+        <ul id="allowed-list" class="item-list exception-list"></ul>
+
+        <div id="allowed-empty" class="empty-state hidden">
+          No exceptions. Everything on restricted sites is blocked.
+        </div>
+      </section>
+
+      <!-- Session / Focus panel -->
       <section class="hero-panel" id="session-section">
         <div class="hero-topline">
           <div class="hero-state">
-            <span class="eyebrow">Current State</span>
+            <span class="eyebrow">Set a Timer</span>
             <h1 id="kyte-current-state">Ready to Focus</h1>
           </div>
           <div class="hero-target">
@@ -50,6 +114,7 @@
         </div>
 
         <div id="session-form">
+          <!-- Duration chips -->
           <div class="duration-chips" role="group" aria-label="Session duration">
             <button class="duration-chip" data-minutes="25">
               <span>25</span>
@@ -69,14 +134,15 @@
             </button>
             <label class="duration-chip custom-duration-wrap">
               <input type="number" id="custom-duration" class="custom-duration-input" placeholder="Custom" min="1" max="999">
-              <small>edit</small>
+              <small>min</small>
             </label>
           </div>
 
-          <div class="session-lock-row">
-            <div class="lock-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+          <!-- Lock mode -->
+          <div class="session-lock-row" id="lock-row">
+            <div class="lock-icon" aria-hidden="true" id="lock-icon-container">
+              <svg id="lock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             </div>
@@ -89,71 +155,21 @@
             </button>
           </div>
 
-          <button id="start-session-btn" class="primary-btn">Begin Focus Session</button>
-        </div>
-      </section>
-
-      <section class="kyte-section">
-        <div class="section-header">
-          <div class="section-heading">
-            <span class="section-title">Restricted Sites</span>
-            <span class="section-count" id="blocked-count">0</span>
-          </div>
-          <span class="section-note">Zero-bypass list</span>
-        </div>
-
-        <div class="add-row">
-          <span class="add-mark">+</span>
-          <input
-            id="domain-input"
-            type="text"
-            placeholder="Add domain or exact path..."
-            spellcheck="false"
-            autocomplete="off"
-          />
-          <button id="add-domain-current-btn" class="text-btn tab-btn" title="Block current tab's domain">This tab</button>
-          <button id="add-domain-btn" class="text-btn" title="Block domain">Add</button>
-        </div>
-
-        <ul id="blocked-list" class="item-list"></ul>
-
-        <div id="blocked-empty" class="empty-state hidden">
-          No restricted sites yet.
-        </div>
-      </section>
-
-      <section class="kyte-section">
-        <div class="section-header">
-          <div class="section-heading">
-            <span class="section-title">Permitted Exceptions</span>
-            <span class="section-count" id="allowed-count">0</span>
-          </div>
-        </div>
-
-        <div class="add-row">
-          <span class="add-mark">+</span>
-          <input
-            id="url-input"
-            type="text"
-            placeholder="Add exception URL..."
-            spellcheck="false"
-            autocomplete="off"
-          />
-          <button id="add-url-btn" class="text-btn" title="Add URL">Add</button>
-        </div>
-
-        <ul id="allowed-list" class="item-list exception-list"></ul>
-
-        <div id="allowed-empty" class="empty-state hidden">
-          No exceptions. Everything on restricted sites is blocked.
+          <!-- CTA -->
+          <button id="start-session-btn" class="primary-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+            <span>Begin Focus Session</span>
+          </button>
         </div>
       </section>
     </main>
 
+    <!-- Footer -->
     <footer id="kyte-footer">
       <span class="local-note">
-        <span class="footer-dot"></span>
-        Stored exclusively on device
+
       </span>
       <a id="kyte-visit-btn" href="https://getkyte.online" target="_blank" rel="noopener noreferrer">Visit Site</a>
     </footer>

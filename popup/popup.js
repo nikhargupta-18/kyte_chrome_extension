@@ -13,6 +13,7 @@ let state = {
   sessionEndTime: 0,
   blockedDomains: [],
   allowedUrls: [],
+  isPremium: false,
 };
 
 let selectedDurationMinutes = 60; // Default chip
@@ -31,6 +32,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadState() {
   const response = await chrome.runtime.sendMessage({ type: 'GET_STATE' });
   if (response?.ok) state = response.state;
+  applyPremiumState();
+}
+
+// ── Premium State ──────────────────────────────────────────
+
+const LOCK_ICON_SVG = `<svg id="lock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+
+const CROWN_ICON_SVG = `<svg id="lock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 6-7 6 7 4-4v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8z"></path></svg>`;
+
+function applyPremiumState() {
+  const row = $('lock-row');
+  const iconContainer = $('lock-icon-container');
+  if (!row || !iconContainer) return;
+
+  if (state.isPremium) {
+    row.classList.remove('is-free');
+    iconContainer.innerHTML = LOCK_ICON_SVG;
+  } else {
+    row.classList.add('is-free');
+    iconContainer.innerHTML = CROWN_ICON_SVG;
+  }
 }
 
 // ── Event Binding ──────────────────────────────────────────
@@ -231,7 +253,7 @@ function renderHeader() {
   const toggle = $('kyte-master-toggle');
   const label = $('kyte-master-label');
   toggle.setAttribute('aria-checked', String(state.kyteEnabled));
-  label.textContent = state.kyteEnabled ? 'Restricted' : 'Standby';
+  label.textContent = state.kyteEnabled ? 'On' : 'Off';
   label.style.color = state.kyteEnabled ? 'var(--ink)' : '';
 }
 

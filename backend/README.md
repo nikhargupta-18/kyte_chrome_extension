@@ -1,5 +1,9 @@
 # Kyte Backend
 
+> Superseded: Locked In Mode now uses the existing Next.js website on Vercel,
+> Polar, and separate tables in the website's existing Supabase project. See `EXTENSION_PREMIUM_SETUP.md` in
+> the `Kyte_web_page` repository. This FastAPI prototype is not deployed.
+
 Entitlement and checkout service for the Kyte Chrome extension.
 
 Lock-in Mode is the only paid feature (US$9, one time). Everything else in the

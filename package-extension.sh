@@ -12,6 +12,8 @@ rm -f "$OUTPUT"
 zip -r "$OUTPUT" . \
   -x ".git/*" \
   -x "node_modules/*" \
+  -x "backend/*" \
+  -x "tests/*" \
   -x ".env" \
   -x "*.map" \
   -x "CHROMEWEBSTORE.md" \

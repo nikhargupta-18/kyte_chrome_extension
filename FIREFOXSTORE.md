@@ -1,6 +1,6 @@
 # Firefox Add-ons (AMO) Listing — Kyte
 
-> Last Updated: 2026-07-07
+> Last Updated: 2026-10-16
 
 ---
 
@@ -22,10 +22,10 @@ Allow one exception per blocked domain:
 If youtube.com is blocked but you need to watch a specific tutorial, paste the exact URL into the Allowed URLs list. Only that URL stays accessible.
 
 Run timed focus sessions:
-Choose a duration (25m, 45m, 1h, 2h, or custom) and start a session. Enable Lock Mode to prevent yourself from ending the session early.
+Choose a duration (25m, 45m, 1h, 2h, or custom) and start a session. Locked In Mode is a separate one-time purchase that prevents early deactivation.
 
 Privacy:
-All data is stored locally on your device. Nothing is sent to any server. No accounts. No analytics.
+Blocklists and session details stay on your device. Optional Locked In Mode uses Google sign-in, Polar checkout, and a purchase check on getkyte.online.
 
 **Category**
 Productivity
@@ -55,17 +55,18 @@ Reason: Firefox 128 (released June 2024) added full support for `declarativeNetR
 
 | Permission | Justification |
 |------------|---------------|
-| `storage` | Stores the user's blocked domains, allowed URL exceptions, and session state locally on the device using `browser.storage.local`. No data leaves the device. |
+| `storage` | Stores blocking settings locally; paid mode also stores a device sign-in token and cached purchase status. |
 | `tabs` | Reads the URL of the currently active tab when the user clicks "Use current tab URL" in the popup, so the exact page URL can be pre-filled. |
 | `declarativeNetRequest` | Registers dynamic redirect rules that intercept navigation to blocked domains and URL paths, redirecting to the extension's custom block page before the blocked site loads. |
 | `alarms` | Schedules the automatic end of a focus session. When a timed session is started, an alarm is set for the chosen duration. |
+| `identity` | Opens the Kyte website sign-in and Polar checkout flow and returns an authorization code to the extension. |
 | `<all_urls>` (host_permissions) | The content script must run on every page to detect SPA navigation (where the URL changes without a full page reload, bypassing declarativeNetRequest) on blocked domains. The set of blocked sites is entirely user-defined at runtime. |
 
 ---
 
 ## Privacy & Data Use
 
-Same as Chrome: no data collection, no off-device transmission, no third parties.
+Same as Chrome: blocklists stay local; paid mode sends account entitlement requests to getkyte.online. Google, Polar, and Supabase process sign-in, payment, and purchase status.
 
 **Privacy Policy URL**: *(same URL as Chrome listing)*
 

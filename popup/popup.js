@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   bindEvents();
   renderAll();
   startTimerTick();
+  refreshPremiumUi();
 });
 
 async function loadState() {
@@ -53,6 +54,51 @@ function applyPremiumState() {
     row.classList.add('is-free');
     iconContainer.innerHTML = CROWN_ICON_SVG;
   }
+  $('premium-status').textContent = state.isPremium
+    ? `Unlocked${state.premiumAccount ? ` · ${state.premiumAccount}` : ''}`
+    : state.premiumAuthError || (state.premiumAuthPending
+      ? 'Continue in the open Kyte tab'
+      : state.premiumAccount ? 'Sign in to restore or purchase' : 'One-time purchase');
+  $('premium-connect-btn').textContent = state.isPremium ? 'Refresh' : 'Unlock / Restore';
+}
+
+async function refreshPremiumUi() {
+  const response = await chrome.runtime.sendMessage({ type: 'GET_ENTITLEMENT' });
+  if (response?.ok) {
+    await loadState();
+    if (response.offline && !response.purchased) {
+      $('premium-status').textContent = 'Connect to verify Locked In Mode';
+    }
+  }
+}
+
+async function connectPremiumUi() {
+  const button = $('premium-connect-btn');
+  if (!state.isPremium) {
+    const { premiumDataConsent } = await chrome.storage.local.get('premiumDataConsent');
+    if (!premiumDataConsent) {
+      const accepted = window.confirm(
+        'Locked In Mode uses your Google account email and Polar purchase status to unlock the feature across devices. Kyte stores a device sign-in token and checks purchase status with getkyte.online. Continue?'
+      );
+      if (!accepted) return;
+      await chrome.storage.local.set({ premiumDataConsent: true });
+    }
+  }
+  button.disabled = true;
+  $('premium-status').textContent = state.isPremium ? 'Checking purchase…' : 'Continue on the website…';
+  try {
+    const response = await chrome.runtime.sendMessage({
+      type: state.isPremium ? 'REFRESH_ENTITLEMENT' : 'CONNECT_PREMIUM',
+    });
+    if (!response?.ok) throw new Error(response?.reason || 'Connection failed');
+    await loadState();
+    if (response.pending) $('premium-status').textContent = 'Continue in the open Kyte tab';
+    else if (!response.purchased) $('premium-status').textContent = 'Payment pending. Reopen Kyte to check.';
+  } catch (_) {
+    $('premium-status').textContent = 'Could not connect. Try again.';
+  } finally {
+    button.disabled = false;
+  }
 }
 
 // ── Event Binding ──────────────────────────────────────────
@@ -65,7 +111,11 @@ function bindEvents() {
       return;
     }
     const newEnabled = !state.kyteEnabled;
-    await chrome.runtime.sendMessage({ type: 'SET_ENABLED', payload: { enabled: newEnabled } });
+    const response = await chrome.runtime.sendMessage({ type: 'SET_ENABLED', payload: { enabled: newEnabled } });
+    if (!response?.ok) {
+      if (response?.reason === 'locked') flashLocked();
+      return;
+    }
     state.kyteEnabled = newEnabled;
     renderHeader();
   });
@@ -122,9 +172,14 @@ function bindEvents() {
 
   // Lock toggle
   $('lock-toggle').addEventListener('click', () => {
+    if (!state.isPremium) {
+      connectPremiumUi();
+      return;
+    }
     lockEnabled = !lockEnabled;
     $('lock-toggle').setAttribute('aria-checked', String(lockEnabled));
   });
+  $('premium-connect-btn').addEventListener('click', connectPremiumUi);
 
   // Start session
   $('start-session-btn').addEventListener('click', startSession);
@@ -236,6 +291,13 @@ async function startSession() {
   if (response?.ok) {
     await loadState();
     renderAll();
+  } else if (response?.reason === 'premium_required') {
+    lockEnabled = false;
+    $('lock-toggle').setAttribute('aria-checked', 'false');
+    await loadState();
+    connectPremiumUi();
+  } else {
+    $('premium-status').textContent = 'Could not start session. Try again.';
   }
 }
 

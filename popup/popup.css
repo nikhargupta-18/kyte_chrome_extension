@@ -469,14 +469,34 @@ button[role="switch"][aria-checked="true"] .toggle-thumb {
 
 /* Premium / free state */
 .session-lock-row.is-free {
-  opacity: 0.55;
-  filter: grayscale(0.5);
-  pointer-events: none;
+  border-color: #FDE68A;
 }
 
 .session-lock-row.is-free #lock-toggle {
-  pointer-events: none;
+  cursor: pointer;
 }
+
+.premium-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 7px 2px 12px;
+  color: var(--label);
+  font-size: 11px;
+}
+
+.premium-action button {
+  border: 0;
+  background: transparent;
+  color: #B45309;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.premium-action button:hover { text-decoration: underline; }
 
 .session-lock-row.is-free .lock-icon {
   color: #D97706;

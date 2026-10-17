@@ -1,5 +1,8 @@
 # Kyte Backend — Task Progress & Handover Log
 
+> Historical plan only. The owner chose the existing Vercel website, Polar,
+> and separate tables in the website's existing Supabase project for Locked In Mode. Do not continue Tasks 3–13.
+
 **Plan source:** `~/Downloads/kyte_backend_implementation_plan.docx`
 **Backend root:** `/Users/hemeshgupta/Projects/kyte_chrome_extension/backend/`
 **Extension root:** `/Users/hemeshgupta/Projects/kyte_chrome_extension/`

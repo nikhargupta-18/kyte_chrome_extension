@@ -1,6 +1,6 @@
 # Chrome Web Store Listing — Kyte
 
-> Last Updated: 2026-07-05
+> Last Updated: 2026-10-16
 
 ---
 
@@ -22,7 +22,7 @@ Allow one exception per blocked domain:
 If youtube.com is blocked but you need to watch a specific tutorial, paste the exact URL into the Allowed URLs list. Only that URL stays accessible — everything else on YouTube stays blocked.
 
 Run timed focus sessions:
-Choose a duration (25m, 45m, 1h, 2h, or custom) and start a session. Blocking activates automatically. When the session ends, blocking turns off on its own. Enable Lock Mode to prevent yourself from ending the session early — even from the popup.
+Choose a duration (25m, 45m, 1h, 2h, or custom) and start a session. Blocking activates automatically. When the session ends, blocking turns off on its own. Locked In Mode is a separate one-time purchase that prevents early deactivation.
 
 How to use:
 1. Click the Kyte icon in your Chrome toolbar.
@@ -31,7 +31,7 @@ How to use:
 4. Use the on/off toggle for manual blocking, or set a Session for timed focus.
 
 Privacy:
-All data (blocked sites, allowed URLs, session state) is stored locally on your device using Chrome's storage API. Nothing is sent to any server. No accounts. No analytics.
+Blocked sites, allowed URLs, and session state stay on your device. Optional Locked In Mode uses Google sign-in, a Polar purchase, and a Kyte server check for access across devices. We do not upload your blocklist or browsing history.
 
 For support or feedback, open an issue on GitHub.
 
@@ -70,28 +70,29 @@ English
 
 | Permission | Type | Justification |
 |------------|------|---------------|
-| `storage` | permissions | Stores the user's blocked domains, allowed URL exceptions, and session state (start time, lock status, end time) locally on the device. No data leaves the device. |
+| `storage` | permissions | Stores blocking settings and session state locally; for Locked In Mode it also stores a device sign-in token and cached purchase status. |
 | `tabs` | permissions | Reads the URL of the currently active tab when the user clicks "This tab" in the Allowed URLs section, so the exact current page URL can be pre-filled. |
 | `declarativeNetRequest` | permissions | Registers dynamic blocking rules that prevent navigation to blocked domains and URL paths at the network level, before the page loads. |
 | `declarativeNetRequestWithHostAccess` | permissions | Required alongside `declarativeNetRequest` to apply dynamic rules to all URLs (not just a predefined static ruleset). Needed because the user's block list is built at runtime. |
 | `alarms` | permissions | Schedules the end of a focus session. When a timed session is started, an alarm is set for the chosen duration. When it fires, blocking is automatically deactivated. Uses `chrome.alarms` instead of `setTimeout` because service workers are ephemeral. |
+| `identity` | permissions | Opens the Kyte website sign-in and Polar checkout flow, then returns an authorization code to the extension. |
 | `*://*/*` | host_permissions | The content script must run on every page to detect whether that page's domain or URL path is in the user's block list and inject the block overlay if so. The set of blocked sites is entirely user-defined and cannot be predicted in advance, requiring broad host access. |
 
 ---
 
 ## Privacy & Data Use
 
-**Does the extension collect user data?** No
+**Does the extension collect user data?** Locked In Mode uses the signed-in account email and purchase status.
 
-All data is stored exclusively in `chrome.storage.local` on the user's own device. No data is transmitted to any external server, third party, or Google account sync. The extension makes no network requests of its own.
+Blocklists and session details remain in `chrome.storage.local`. For Locked In Mode, the extension contacts getkyte.online to check account entitlement; Google handles sign-in, Polar handles checkout, and Supabase stores the account purchase record.
 
 | Data Type | Collected? | Transmitted Off-Device? | Purpose | Shared with Third Parties? |
 |-----------|-----------|------------------------|---------|---------------------------|
-| Personally identifiable info | No | No | — | No |
+| Personally identifiable info | Yes, for paid mode | Yes | Account email identifies the purchase across devices | Google, Polar, Supabase as needed |
 | Web history | No | No | — | No |
 | Website content | No | No | — | No |
 | User activity | No | No | — | No |
-| All other types | No | No | — | No |
+| Purchase status | Yes, for paid mode | Yes | Verify access to Locked In Mode | Polar and Supabase |
 
 ### Data Use Certification
 - [x] Data is NOT sold to third parties
@@ -103,7 +104,7 @@ All data is stored exclusively in `chrome.storage.local` on the user's own devic
 ## Privacy Policy
 
 **Privacy Policy URL**
-> ⚠️ A publicly hosted privacy policy URL is required before submission. Host the policy below on GitHub Pages, a personal site, or a Notion page.
+https://getkyte.online/privacy
 
 ### Privacy Policy Text (to be hosted publicly)
 
@@ -111,10 +112,10 @@ All data is stored exclusively in `chrome.storage.local` on the user's own devic
 Privacy Policy for Kyte — Chrome Extension
 Last updated: 2026-07-05
 
-Kyte ("the extension") does not collect, transmit, sell, or share any personal data.
+Kyte keeps blocklists and session details on your device. Optional Locked In Mode uses your account email and purchase status to unlock the feature across devices.
 
 Data Storage
-All user data — including blocked domains, allowed URL exceptions, and session state — is stored locally on your device using Chrome's built-in chrome.storage.local API. This data never leaves your device. It is not sent to any server, is not synced to your Google account, and is not shared with any third party.
+Blocked domains, allowed URL exceptions, and session state are stored locally using chrome.storage.local. For Locked In Mode, a device sign-in token and seven-day purchase cache are also stored locally. Your blocklist and browsing history are not uploaded.
 
 Data the extension stores locally:
 - The list of blocked domains and URL paths you add
@@ -122,7 +123,7 @@ Data the extension stores locally:
 - Session state (duration, start time, lock status)
 
 Network Requests
-The extension makes no network requests of its own. It does not contact any external API, analytics service, or server.
+For Locked In Mode, the extension contacts getkyte.online to check the signed-in account's purchase. Google handles sign-in, Polar handles payment, and Supabase stores the purchase record. See https://getkyte.online/privacy.
 
 Removal
 Uninstalling the extension removes all locally stored data.
@@ -137,7 +138,7 @@ For questions about this policy, open an issue on the project's GitHub repositor
 
 **Visibility**: Public
 **Regions**: All regions
-**Pricing**: Free
+**Pricing**: Free core features; optional one-time purchase for Locked In Mode
 
 ---
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Kyte - Best Website and URL Level Blocker",
-  "version": "2.3.0",
-  "description": "Block sites by domain or specific URL path. Unlock one exception. Run timed focus sessions with optional lock mode.",
+  "version": "2.4.0",
+  "description": "Block sites by domain or URL path. Run free focus sessions with optional paid Locked In Mode.",
   "icons": {
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",
@@ -13,7 +13,8 @@
     "tabs",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "alarms"
+    "alarms",
+    "identity"
   ],
   "host_permissions": [
     "*://*/*"
@@ -59,7 +60,9 @@
       "strict_min_version": "128.0",
       "data_collection_permissions": {
         "required": [
-          "none"
+          "personallyIdentifyingInfo",
+          "authenticationInfo",
+          "financialAndPaymentInfo"
         ]
       }
     }
